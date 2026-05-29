@@ -1,0 +1,143 @@
+<%- include('partials-header') %>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>All Submissions (<%= submissions.length %>)</h3></div>
+  <div class="admin-panel-body" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Author</th><th>Email</th><th>Type</th><th>Status</th><th>Submitted</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (submissions.length > 0) { %>
+          <% submissions.forEach(s => { %>
+          <tr>
+            <td>
+              <strong><%= s.title.substring(0,45) %><%= s.title.length > 45 ? '…' : '' %></strong>
+              <% if (s.abstract) { %>
+              <div style="font-size:0.78rem;color:var(--admin-muted);margin-top:0.2rem"><%= s.abstract.substring(0,80) %>…</div>
+              <% } %>
+            </td>
+            <td><%= s.author_name %></td>
+            <td><a href="mailto:<%= s.email %>" style="font-size:0.85rem"><%= s.email %></a></td>
+            <td><span class="status status-approved" style="text-transform: capitalize;"><%= s.type %></span></td>
+            <td>
+              <select class="status-select" data-id="<%= s.id %>" style="font-size:0.8rem;padding:0.25rem 0.5rem;border:1.5px solid var(--border-light);border-radius:4px;cursor:pointer;outline:none;font-weight:600;background:#fff;color:var(--admin-ink)">
+                <option value="pending"  <%= s.status==='pending'  ? 'selected':'' %>>Pending</option>
+                <option value="approved" <%= s.status==='approved' ? 'selected':'' %>>Approved</option>
+                <option value="rejected" <%= s.status==='rejected' ? 'selected':'' %>>Rejected</option>
+              </select>
+            </td>
+            <td style="white-space:nowrap;font-size:0.82rem"><%= new Date(s.created_at).toLocaleDateString('en-IN') %></td>
+            <td>
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <a href="/tamil-literature/admin/submissions/download/<%= s.id %>" class="btn btn-ghost btn-sm" style="padding:0.35rem 0.7rem;font-size:0.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem">
+                  <i data-lucide="download" class="icon-inline" style="width:14px;height:14px;"></i> PDF
+                </a>
+                <form action="/tamil-literature/admin/submissions/delete/<%= s.id %>" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-danger btn-sm" data-confirm="Are you sure you want to delete this submission? This will permanently delete both the database entry and the uploaded PDF file." style="padding:0.35rem 0.7rem;font-size:0.8rem;display:inline-flex;align-items:center;gap:0.3rem;cursor:pointer">
+                    <i data-lucide="trash-2" class="icon-inline" style="width:14px;height:14px;"></i> Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+          <% } else { %>
+          <tr><td colspan="7" style="text-align:center;color:var(--admin-muted);font-style:italic;padding:2rem">No submissions received yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.status-select').forEach(select => {
+      select.addEventListener('change', function() {
+        const id = this.dataset.id;
+        const status = this.value;
+        const originalValue = this.getAttribute('data-original') || this.value;
+        
+        // Disable temporarily to prevent multiple inputs
+        this.disabled = true;
+        
+        fetch(`/tamil-literature/admin/submissions/update/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ status: status })
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('HTTP network error');
+          return response.json();
+        })
+        .then(data => {
+          this.disabled = false;
+          if (data.success) {
+            this.setAttribute('data-original', status);
+            showToast(`Submission status updated to "${status}" successfully!`, 'success');
+          } else {
+            throw new Error(data.error || 'Update failed');
+          }
+        })
+        .catch(err => {
+          this.disabled = false;
+          this.value = originalValue; // Rollback
+          console.error(err);
+          showToast('Error updating submission status. Please try again.', 'error');
+        });
+      });
+      
+      // Cache original value
+      select.setAttribute('data-original', select.value);
+    });
+
+    // Premium UI Toast notification
+    function showToast(message, type = 'success') {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.position = 'fixed';
+        container.style.bottom = '24px';
+        container.style.right = '24px';
+        container.style.zIndex = '99999';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.gap = '8px';
+        document.body.appendChild(container);
+      }
+      
+      const toast = document.createElement('div');
+      toast.style.background = type === 'success' ? '#2ecc71' : '#e74c3c';
+      toast.style.color = '#ffffff';
+      toast.style.padding = '10px 20px';
+      toast.style.borderRadius = '5px';
+      toast.style.boxShadow = '0 8px 16px rgba(0,0,0,0.15)';
+      toast.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      toast.style.fontSize = '0.85rem';
+      toast.style.fontWeight = '600';
+      toast.style.opacity = '0';
+      toast.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+      toast.style.transform = 'translateY(15px)';
+      toast.innerText = message;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      }, 10);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-15px)';
+        setTimeout(() => toast.remove(), 350);
+      }, 3500);
+    }
+  });
+</script>
+
+<%- include('partials-footer') %>

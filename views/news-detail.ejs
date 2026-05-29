@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div class="container">
+    <span class="news-badge"><%= item.category %></span>
+    <h1 style="margin-top:0.5rem"><%= item.title %></h1>
+    <p><%= new Date(item.created_at).toLocaleDateString('en-IN', {year:'numeric',month:'long',day:'numeric'}) %></p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container" style="max-width:780px">
+    <div class="form-box">
+      <div style="font-size:1.05rem;line-height:1.9;color:var(--ink-soft);white-space:pre-line;margin-bottom:1.5rem"><%= item.body %></div>
+      
+      <% if (item.link) { %>
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-light);">
+          <h4 style="margin-bottom: 0.8rem; font-family: var(--font-display); color: var(--ink); font-size: 1rem;">
+            <span class="lang-en">Reference / External Link</span>
+            <span class="lang-ta">பரிந்துரை / வெளிப்புற இணைப்பு</span>
+          </h4>
+          <a href="<%= item.link %>" target="_blank" class="btn btn-primary btn-sm animate-pulse" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+            <i data-lucide="external-link" style="width:16px;height:16px;"></i>
+            <span class="lang-en">Visit External Link</span>
+            <span class="lang-ta">வெளிப்புற இணைப்பை பார்வையிடவும்</span>
+          </a>
+        </div>
+      <% } %>
+    </div>
+    
+    <div style="margin-top:2rem">
+      <a href="/news" class="btn btn-red btn-sm" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+        <span class="lang-en"><i data-lucide="arrow-left" class="icon-inline" style="margin-right:0.25rem;margin-left:0;width:14px;height:14px;"></i> Back to News</span>
+        <span class="lang-ta"><i data-lucide="arrow-left" class="icon-inline" style="margin-right:0.25rem;margin-left:0;width:14px;height:14px;"></i> செய்திகளுக்குத் திரும்புக</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+

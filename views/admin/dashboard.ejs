@@ -1,0 +1,93 @@
+<%- include('partials-header') %>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon"><i data-lucide="newspaper"></i></div>
+    <div class="stat-number"><%= stats.news %></div>
+    <div class="stat-label">News Posts</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i data-lucide="book-open"></i></div>
+    <div class="stat-number"><%= stats.books %></div>
+    <div class="stat-label">Books & Conferences</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i data-lucide="scroll"></i></div>
+    <div class="stat-number"><%= stats.journals %></div>
+    <div class="stat-label">Journal Articles</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i data-lucide="users"></i></div>
+    <div class="stat-number"><%= stats.team %></div>
+    <div class="stat-label">Editorial Members</div>
+  </div>
+  <div class="stat-card" style="border-top-color:#e74c3c">
+    <div class="stat-icon"><i data-lucide="inbox"></i></div>
+    <div class="stat-number"><%= stats.submissions %></div>
+    <div class="stat-label">Pending Submissions</div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>Quick Actions</h3></div>
+  <div class="admin-panel-body" style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="/tamil-literature/admin/news" class="btn btn-primary">+ Add News</a>
+    <a href="/tamil-literature/admin/books" class="btn btn-gold">+ Add Book/Conference</a>
+    <a href="/tamil-literature/admin/journals" class="btn btn-primary">+ Add Journal</a>
+    <a href="/tamil-literature/admin/editorial" class="btn btn-gold">+ Add Team Member</a>
+    <a href="/tamil-literature/admin/submissions" class="btn btn-ghost">Review Submissions</a>
+  </div>
+</div>
+
+<div class="admin-dashboard-row">
+
+  <!-- Recent News -->
+  <div class="admin-panel">
+    <div class="admin-panel-header">
+      <h3>Recent News</h3>
+      <a href="/tamil-literature/admin/news" class="btn btn-ghost btn-sm">Manage <i data-lucide="arrow-right" class="icon-inline" style="margin-left:0.25rem;margin-right:0;width:12px;height:12px;"></i></a>
+    </div>
+    <div class="admin-panel-body" style="padding:0">
+      <% if (recentNews.length > 0) { %>
+      <% recentNews.forEach(n => { %>
+      <div style="padding:0.9rem 1.5rem;border-bottom:1px solid var(--admin-border)">
+        <div style="font-weight:500;font-size:0.95rem"><%= n.title %></div>
+        <div style="font-size:0.78rem;color:var(--admin-muted);margin-top:0.2rem">
+          <span class="status status-approved"><%= n.category %></span>
+          &nbsp;<%= new Date(n.created_at).toLocaleDateString() %>
+        </div>
+      </div>
+      <% }) %>
+      <% } else { %>
+      <p style="padding:1.5rem;color:var(--admin-muted);font-style:italic">No news posts yet.</p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Recent Submissions -->
+  <div class="admin-panel">
+    <div class="admin-panel-header">
+      <h3>Recent Submissions</h3>
+      <a href="/tamil-literature/admin/submissions" class="btn btn-ghost btn-sm">Manage <i data-lucide="arrow-right" class="icon-inline" style="margin-left:0.25rem;margin-right:0;width:12px;height:12px;"></i></a>
+    </div>
+    <div class="admin-panel-body" style="padding:0">
+      <% if (recentSubmissions.length > 0) { %>
+      <% recentSubmissions.forEach(s => { %>
+      <div style="padding:0.9rem 1.5rem;border-bottom:1px solid var(--admin-border)">
+        <div style="font-weight:500;font-size:0.9rem"><%= s.title.substring(0,45) %><%= s.title.length > 45 ? '…' : '' %></div>
+        <div style="font-size:0.78rem;color:var(--admin-muted);margin-top:0.2rem">
+          by <%= s.author_name %> &nbsp;
+          <span class="status status-<%= s.status %>"><%= s.status %></span>
+        </div>
+      </div>
+      <% }) %>
+      <% } else { %>
+      <p style="padding:1.5rem;color:var(--admin-muted);font-style:italic">No submissions yet.</p>
+      <% } %>
+    </div>
+  </div>
+
+</div>
+
+<%- include('partials-footer') %>

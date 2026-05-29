@@ -1,0 +1,84 @@
+<%- include('partials-header') %>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>Add Editorial Team Member</h3></div>
+  <div class="admin-panel-body">
+    <form action="/tamil-literature/admin/editorial/add" method="POST" enctype="multipart/form-data">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" name="name" required placeholder="Dr. / Prof. Full Name">
+        </div>
+        <div class="form-group">
+          <label>Role / Title *</label>
+          <input type="text" name="role" required placeholder="e.g., Editor-in-Chief">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Biography</label>
+        <textarea name="bio" rows="3" placeholder="Short bio / institutional affiliation…"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Notable Work / Publication</label>
+        <input type="text" name="popular_work" placeholder='e.g., "Sangam Poetry and Modernity" (2019)'>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Works / Profile Link</label>
+          <input type="url" name="works_link" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>Display Order</label>
+          <input type="number" name="display_order" value="0" min="0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Profile Image (optional)</label>
+        <input type="file" name="profile_image" accept="image/*">
+        <small style="color:var(--admin-muted);font-size:0.78rem">Recommended: square image, at least 300×300px</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Team Member</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>Current Editorial Team (<%= team.length %>)</h3></div>
+  <div class="admin-panel-body" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Photo</th><th>Name</th><th>Role</th><th>Notable Work</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (team.length > 0) { %>
+          <% team.forEach(m => { %>
+          <tr>
+            <td>
+              <% if (m.profile_image) { %>
+              <img src="<%= m.profile_image.startsWith('http') ? m.profile_image : '/uploads/editorial/' + m.profile_image %>" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--admin-border)">
+              <% } else { %>
+              <span style="display:inline-flex;width:40px;height:40px;border-radius:50%;background:var(--admin-bg);align-items:center;justify-content:center;border:2px solid var(--admin-border)"><i data-lucide="user" style="width:20px;height:20px;color:var(--admin-muted);"></i></span>
+              <% } %>
+            </td>
+            <td><strong><%= m.name %></strong></td>
+            <td><%= m.role %></td>
+            <td style="font-style:italic;font-size:0.85rem;color:var(--admin-muted)"><%= m.popular_work || '—' %></td>
+            <td><%= m.display_order %></td>
+            <td>
+              <form action="/tamil-literature/admin/editorial/delete/<%= m.id %>" method="POST" style="display:inline">
+                <button type="submit" class="btn btn-danger btn-sm" data-confirm="Remove this team member?" style="display:inline-flex;align-items:center;gap:0.3rem;cursor:pointer">
+                  <i data-lucide="trash-2" class="icon-inline" style="width:14px;height:14px;"></i> Remove
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+          <% } else { %>
+          <tr><td colspan="6" style="text-align:center;color:var(--admin-muted);font-style:italic;padding:2rem">No team members added yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('partials-footer') %>

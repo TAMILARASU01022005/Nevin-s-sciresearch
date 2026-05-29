@@ -1,0 +1,143 @@
+<%- include('partials-header') %>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3 id="panel-header-title">Add New Journal Article</h3></div>
+  <div class="admin-panel-body">
+    <form action="/tamil-literature/admin/journals/add" method="POST" enctype="multipart/form-data">
+      
+      <!-- Identify Type Radio Section -->
+      <div class="form-group" style="margin-bottom: 1.8rem; border-bottom: 1px dashed var(--admin-border); padding-bottom: 1rem;">
+        <label style="display:block;margin-bottom:0.5rem;font-weight:600">Identify Type *</label>
+        <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+          <label style="display:inline-flex;align-items:center;gap:0.5rem;font-weight:normal;cursor:pointer;margin:0">
+            <input type="radio" name="type" value="article" checked style="width:16px;height:16px;accent-color:var(--admin-header)">
+            <span>Article (Individual research paper - PDF/DOCX)</span>
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:0.5rem;font-weight:normal;cursor:pointer;margin:0">
+            <input type="radio" name="type" value="journal" style="width:16px;height:16px;accent-color:var(--admin-header)">
+            <span>Journal (Group of articles - ZIP folder)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="title-label">Article Title *</label>
+        <input type="text" id="title-input" name="title" required placeholder="Full article title">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Author(s) *</label>
+          <input type="text" name="author" required placeholder="Author name(s)">
+        </div>
+        <div class="form-group">
+          <label>Category / Field</label>
+          <input type="text" name="category" placeholder="e.g., Classical Literature">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Volume</label>
+          <input type="text" name="volume" placeholder="e.g., XII">
+        </div>
+        <div class="form-group">
+          <label>Issue</label>
+          <input type="text" name="issue" placeholder="e.g., 3">
+        </div>
+        <div class="form-group">
+          <label>Year</label>
+          <input type="number" name="year" value="<%= new Date().getFullYear() %>" min="1900" max="2099">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Abstract</label>
+        <textarea name="abstract" rows="4" placeholder="Article abstract (200–300 words)…"></textarea>
+      </div>
+      <div class="form-group">
+        <label id="file-label">PDF / DOCX File *</label>
+        <input type="file" id="file-input" name="pdf_file" accept=".pdf,.docx,.doc,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+      </div>
+      <button type="submit" id="submit-btn" class="btn btn-primary">Add Journal Article</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>All Publications (<%= journals.length %>)</h3></div>
+  <div class="admin-panel-body" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Type</th><th>Author</th><th>Volume / Issue</th><th>Year</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (journals.length > 0) { %>
+          <% journals.forEach(j => { %>
+          <tr>
+            <td><strong><%= j.title.substring(0,50) %><%= j.title.length > 50 ? '…' : '' %></strong></td>
+            <td>
+              <% if (j.type === 'journal') { %>
+                <span class="status status-approved" style="background:#b7950b;color:white;font-weight:600;font-size:0.75rem">Journal (ZIP)</span>
+              <% } else { %>
+                <span class="status status-approved" style="font-weight:600;font-size:0.75rem">Article</span>
+              <% } %>
+            </td>
+            <td><%= j.author || '—' %></td>
+            <td><%= j.volume ? 'Vol. '+j.volume : '' %><%= j.issue ? ' / '+j.issue : '' %></td>
+            <td><%= j.year || '—' %></td>
+            <td>
+              <a href="/download/journal/<%= j.id %>" class="btn btn-ghost btn-sm" target="_blank" style="display:inline-flex;align-items:center;gap:0.3rem">
+                <i data-lucide="download" class="icon-inline" style="width:14px;height:14px;"></i> Download
+              </a>
+              <form action="/tamil-literature/admin/journals/delete/<%= j.id %>" method="POST" style="display:inline">
+                <button type="submit" class="btn btn-danger btn-sm" data-confirm="Delete this publication?" style="display:inline-flex;align-items:center;gap:0.3rem;cursor:pointer">
+                  <i data-lucide="trash-2" class="icon-inline" style="width:14px;height:14px;"></i> Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+          <% } else { %>
+          <tr><td colspan="6" style="text-align:center;color:var(--admin-muted);font-style:italic;padding:2rem">No journals or articles added yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const radios = document.querySelectorAll('input[name="type"]');
+    const titleLabel = document.getElementById('title-label');
+    const titleInput = document.getElementById('title-input');
+    const fileLabel = document.getElementById('file-label');
+    const fileInput = document.getElementById('file-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const panelHeader = document.getElementById('panel-header-title');
+
+    function updateForm(type) {
+      if (type === 'journal') {
+        titleLabel.innerHTML = 'Journal Title *';
+        titleInput.placeholder = 'Full journal/volume title';
+        fileLabel.innerHTML = 'ZIP Folder (containing article PDFs) *';
+        fileInput.accept = '.zip,application/zip,application/x-zip-compressed';
+        submitBtn.innerHTML = 'Add Journal';
+        panelHeader.innerHTML = 'Add New Journal';
+      } else {
+        titleLabel.innerHTML = 'Article Title *';
+        titleInput.placeholder = 'Full article title';
+        fileLabel.innerHTML = 'PDF / DOCX File *';
+        fileInput.accept = '.pdf,.docx,.doc,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        submitBtn.innerHTML = 'Add Journal Article';
+        panelHeader.innerHTML = 'Add New Journal Article';
+      }
+    }
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        updateForm(e.target.value);
+      });
+    });
+  });
+</script>
+
+<%- include('partials-footer') %>
+

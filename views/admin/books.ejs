@@ -1,0 +1,88 @@
+<%- include('partials-header') %>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>Add Book / Conference Proceedings</h3></div>
+  <div class="admin-panel-body">
+    <form action="/tamil-literature/admin/books/add" method="POST" enctype="multipart/form-data">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" name="title" required placeholder="Book or proceedings title">
+        </div>
+        <div class="form-group">
+          <label>Author / Editor *</label>
+          <input type="text" name="author" required placeholder="Author or editor name(s)">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Type *</label>
+        <select name="is_conference">
+          <option value="0">Book</option>
+          <option value="1">Conference Proceedings</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Conference Name (if applicable)</label>
+          <input type="text" name="conference_name" placeholder="Name of the conference">
+        </div>
+        <div class="form-group">
+          <label>Year</label>
+          <input type="number" name="year" value="<%= new Date().getFullYear() %>" min="1900" max="2099">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="3" placeholder="Brief description…"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cover Image (optional)</label>
+          <input type="file" name="cover_image" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>PDF File *</label>
+          <input type="file" name="pdf_file" accept="application/pdf" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Book/Conference</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>All Books & Conferences (<%= books.length %>)</h3></div>
+  <div class="admin-panel-body" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Author</th><th>Type</th><th>Year</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (books.length > 0) { %>
+          <% books.forEach(b => { %>
+          <tr>
+            <td><strong><%= b.title %></strong></td>
+            <td><%= b.author %></td>
+            <td><span class="status <%= b.is_conference ? 'status-pending' : 'status-approved' %>"><%= b.is_conference ? 'Conference' : 'Book' %></span></td>
+            <td><%= b.year || '—' %></td>
+            <td>
+              <a href="/download/book/<%= b.id %>" class="btn btn-ghost btn-sm" target="_blank" style="display:inline-flex;align-items:center;gap:0.3rem">
+                <i data-lucide="download" class="icon-inline" style="width:14px;height:14px;"></i> PDF
+              </a>
+              <form action="/tamil-literature/admin/books/delete/<%= b.id %>" method="POST" style="display:inline">
+                <button type="submit" class="btn btn-danger btn-sm" data-confirm="Delete this entry and its files?" style="display:inline-flex;align-items:center;gap:0.3rem;cursor:pointer">
+                  <i data-lucide="trash-2" class="icon-inline" style="width:14px;height:14px;"></i> Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+          <% } else { %>
+          <tr><td colspan="5" style="text-align:center;color:var(--admin-muted);font-style:italic;padding:2rem">No books added yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('partials-footer') %>

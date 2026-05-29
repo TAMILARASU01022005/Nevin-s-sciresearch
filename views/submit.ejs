@@ -1,0 +1,238 @@
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div class="container">
+    <h1>
+      <span class="lang-en">Submissions</span>
+      <span class="lang-ta">சமர்ப்பிப்புகள்</span>
+    </h1>
+    <p class="lang-en">Contribute to Tamil and Scientific studies. Submit your research papers, journal articles, or book manuscripts.</p>
+    <p class="lang-ta">தமிழ் மற்றும் அறிவியல் ஆய்வுகளுக்குப் பங்களிக்கவும். உங்கள் ஆராய்ச்சி கட்டுரைகள், இதழ் கட்டுரைகள் அல்லது புத்தகக் கையெழுத்துப் பிரதிகளைச் சமர்ப்பிக்கவும்.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container" style="max-width:850px">
+
+    <% if (success && success.length) { %>
+    <div class="flash flash-success"><%= success[0] %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+    <div class="flash flash-error"><%= error[0] %></div>
+    <% } %>
+
+    <!-- Interactive Guidelines & Policies Tabs -->
+    <div class="tabs-container" style="margin-bottom: 3rem;">
+      <div class="tabs-header" style="display:flex;border-bottom:2px solid var(--border-light);margin-bottom:1.5rem;gap:1rem;overflow-x:auto;padding-bottom:2px;">
+        <button class="tab-link active" data-tab="tab-guidelines" style="background:none;border:none;padding:0.8rem 1rem;font-weight:600;font-size:0.95rem;color:var(--kolam-red);border-bottom:3px solid var(--kolam-red);cursor:pointer;outline:none;white-space:nowrap;font-family:var(--font-display);">
+          <span class="lang-en">Guidelines for Authors</span><span class="lang-ta">ஆசிரியர்களுக்கான வழிகாட்டுதல்கள்</span>
+        </button>
+        <button class="tab-link" data-tab="tab-plagiarism" style="background:none;border:none;padding:0.8rem 1rem;font-weight:600;font-size:0.95rem;color:var(--ink-muted);cursor:pointer;outline:none;white-space:nowrap;font-family:var(--font-display);">
+          <span class="lang-en">Plagiarism Policy</span><span class="lang-ta">திருட்டு கொள்கை</span>
+        </button>
+        <button class="tab-link" data-tab="tab-copyright" style="background:none;border:none;padding:0.8rem 1rem;font-weight:600;font-size:0.95rem;color:var(--ink-muted);cursor:pointer;outline:none;white-space:nowrap;font-family:var(--font-display);">
+          <span class="lang-en">Copyright Policy & Form</span><span class="lang-ta">பதிப்புரிமைக் கொள்கை & படிவம்</span>
+        </button>
+        <button class="tab-link" data-tab="tab-review" style="background:none;border:none;padding:0.8rem 1rem;font-weight:600;font-size:0.95rem;color:var(--ink-muted);cursor:pointer;outline:none;white-space:nowrap;font-family:var(--font-display);">
+          <span class="lang-en">Peer Review Process</span><span class="lang-ta">சக மதிப்பாய்வு முறை</span>
+        </button>
+      </div>
+
+      <!-- Guidelines Content -->
+      <div id="tab-guidelines" class="tab-content" style="display:block;background:var(--parchment);padding:2rem;border-radius:8px;border:1px solid var(--border);">
+        <div class="lang-en">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">Guidelines for Authors</h4>
+          <p style="margin-bottom:1rem;line-height:1.6">Submissions must be original research papers not published or under consideration elsewhere.</p>
+          <ul style="color:var(--ink-muted);font-size:0.95rem;line-height:1.8;padding-left:1.5rem">
+            <li><strong>Language:</strong> Tamil or British English.</li>
+            <li><strong>Length:</strong> 8 to 15 pages (including references, tables, and figures).</li>
+            <li><strong>Formatting:</strong> Font – Arial Unicode (size 12), Spacing – 1.5 line, Margins – Wide (A4 size).</li>
+            <li><strong>Title Page:</strong> Title, author name(s), affiliation, and contact email.</li>
+            <li><strong>Abstract & Keywords:</strong> Abstract of 150-200 words, and 4 to 6 keywords.</li>
+            <li><strong>Headings:</strong> Bold, numbered sequentially (e.g., 1. Introduction, 1.1 Methodology).</li>
+            <li><strong>References:</strong> APA style (arranged alphabetically).</li>
+          </ul>
+        </div>
+        <div class="lang-ta">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">ஆசிரியர்களுக்கான வழிகாட்டுதல்கள்</h4>
+          <p style="margin-bottom:1rem;line-height:1.6">சமர்ப்பிக்கப்படும் கட்டுரைகள் இதற்கு முன் எங்கும் வெளியிடப்படாத அல்லது பரிசீலனையில் இல்லாத அசல் ஆராய்ச்சி கட்டுரைகளாக இருக்க வேண்டும்.</p>
+          <ul style="color:var(--ink-muted);font-size:0.95rem;line-height:1.8;padding-left:1.5rem">
+            <li><strong>மொழி:</strong> தமிழ் அல்லது பிரிட்டிஷ் ஆங்கிலம்.</li>
+            <li><strong>நீளம்:</strong> 8 முதல் 15 பக்கங்கள் (குறிப்புகள், அட்டவணைகள் மற்றும் படங்கள் உட்பட).</li>
+            <li><strong>வடிவமைப்பு:</strong> எழுத்துரு – ஏரியல் யூனிகோட் (அளவு 12), இடைவெளி – 1.5 வரி, ஓரங்கள் – அகலம் (A4 அளவு).</li>
+            <li><strong>தலைப்புப் பக்கம்:</strong> தலைப்பு, ஆசிரியர் பெயர்(கள்), இணைப்பு மற்றும் தொடர்பு மின்னஞ்சல்.</li>
+            <li><strong>சுருக்கம் & முக்கிய வார்த்தைகள்:</strong> 150-200 சொற்களைக் கொண்ட சுருக்கம் மற்றும் 4 முதல் 6 முக்கிய வார்த்தைகள்.</li>
+            <li><strong>தலைப்புகள்:</strong> தடிமனான எழுத்து, வரிசையாக எண்ணிடப்பட்டவை (எ.கா., 1. அறிமுகம், 1.1 ஆராய்ச்சி முறை).</li>
+            <li><strong>குறிப்புகள்:</strong> APA முறை (அகரவரிசையில் அமைக்கப்பட்டவை).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Plagiarism Policy Content -->
+      <div id="tab-plagiarism" class="tab-content" style="display:none;background:var(--parchment);padding:2rem;border-radius:8px;border:1px solid var(--border);">
+        <div class="lang-en">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">Plagiarism Policy</h4>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem">
+            <strong>Plagiarism Policy:</strong> Plagiarism in any form is strictly prohibited. Submissions with a plagiarism score above 10% will be rejected immediately. All articles are screened through state-of-the-art plagiarism detection software before entering the peer-review cycle.
+          </p>
+        </div>
+        <div class="lang-ta">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">திருட்டு கொள்கை (Plagiarism Policy)</h4>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem">
+            <strong>படைப்புத் திருட்டுக் கொள்கை:</strong> எந்த வடிவத்திலும் உள்ள படைப்புத் திருட்டு கடுமையாக தடைசெய்யப்பட்டுள்ளது. 10% க்கும் அதிகமான படைப்புத் திருட்டு மதிப்பெண் கொண்ட சமர்ப்பிப்புகள் உடனடியாக நிராகரிக்கப்படும். அனைத்துக் கட்டுரைகளும் சக மதிப்பாய்வு முறைக்கு உட்படுத்தப்படும் முன் நவீன மென்பொருட்கள் மூலம் படைப்புத் திருட்டு சோதனைக்கு உட்படுத்தப்படும்.
+          </p>
+        </div>
+      </div>
+
+      <!-- Copyright Policy Content -->
+      <div id="tab-copyright" class="tab-content" style="display:none;background:var(--parchment);padding:2rem;border-radius:8px;border:1px solid var(--border);">
+        <div class="lang-en">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">Copyright Policy & Agreement Form</h4>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem;margin-bottom:1rem">
+            <strong>Copyright Policy:</strong> Authors retain the copyright of their published work. By submitting, authors grant TamilArivu a non-exclusive license to publish the article under the Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA) license.
+          </p>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem">
+            <strong>Copyright Form:</strong> Authors of accepted manuscripts must sign a copyright agreement form prior to publication. This ensures academic protection and integrity of the scholarly network.
+          </p>
+        </div>
+        <div class="lang-ta">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">பதிப்புரிமைக் கொள்கை & பதிப்புரிமைப் படிவம்</h4>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem;margin-bottom:1rem">
+            <strong>பதிப்புரிமைக் கொள்கை:</strong> ஆசிரியர்கள் தங்களின் வெளியிடப்பட்ட படைப்பின் பதிப்புரிமையைத் தங்களோடு தக்க வைத்துக் கொள்கிறார்கள். சமர்ப்பிப்பதன் மூலம், ஆசிரியர்கள் 'Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)' உரிமத்தின் கீழ் கட்டுரையை வெளியிட தமிழறிவுக்கு பிரத்தியேகமற்ற உரிமத்தை வழங்குகிறார்கள்.
+          </p>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem">
+            <strong>பதிப்புரிமைப் படிவம்:</strong> ஏற்றுக்கொள்ளப்பட்ட கட்டுரைகளின் ஆசிரியர்கள் வெளியீட்டிற்கு முன் பதிப்புரிமை ஒப்பந்தப் படிவத்தில் கையொப்பமிட வேண்டும். இது கல்விசார் பாதுகாப்பை மற்றும் ஆய்வு நெறிமுறைகளை உறுதி செய்கிறது.
+          </p>
+        </div>
+      </div>
+
+      <!-- Peer Review Content -->
+      <div id="tab-review" class="tab-content" style="display:none;background:var(--parchment);padding:2rem;border-radius:8px;border:1px solid var(--border);">
+        <div class="lang-en">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">Peer Review Process</h4>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem">
+            <strong>Double-Blind Peer Review:</strong> The journal follows a double-blind peer review process where the identities of both authors and reviewers remain confidential. Every manuscript is examined by at least two expert referees within the relevant field of study to ensure the highest standards of scientific and academic excellence.
+          </p>
+        </div>
+        <div class="lang-ta">
+          <h4 style="color:var(--kolam-red);margin-top:0;margin-bottom:1rem;font-size:1.2rem">சக மதிப்பாய்வு முறை</h4>
+          <p style="line-height:1.8;color:var(--ink);font-size:0.95rem">
+            <strong>இரட்டை மறைப்பு சக மதிப்பாய்வு:</strong> இந்த ஆய்விதழ் இரட்டை மறைப்பு (double-blind) சக மதிப்பாய்வு முறையைப் பின்பற்றுகிறது, இதில் ஆசிரியர்கள் மற்றும் மதிப்பாய்வாளர்கள் இருவரின் அடையாளங்களும் ரகசியமாக வைக்கப்படும். மிக உயர்ந்த அறிவியல் மற்றும் கல்வித் தரத்தை உறுதி செய்வதற்காக ஒவ்வொரு கட்டுரையும் தொடர்புடைய ஆய்வுத் துறையிலுள்ள குறைந்தது இரண்டு நிபுணர் குழுக்களால் மதிப்பீடு செய்யப்படுகிறது.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submission Form -->
+    <div class="form-box">
+      <h3 style="margin-bottom:1.5rem">
+        <span class="lang-en">Online Submission Form</span>
+        <span class="lang-ta">இணையவழி சமர்ப்பிப்புப் படிவம்</span>
+      </h3>
+      <form action="/submit" method="POST" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+          <label for="type">
+            <span class="lang-en">Submission Type *</span>
+            <span class="lang-ta">சமர்ப்பிப்பு வகை *</span>
+          </label>
+          <select id="type" name="type" required style="font-family:var(--font-body)">
+            <option value="journal">Journal Article / ஆய்விதழ் கட்டுரை</option>
+            <option value="book">Book Manuscript / புத்தகக் கையெழுத்துப் பிரதி</option>
+            <option value="conference">Conference Paper / மாநாட்டுக் கட்டுரை</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="title">
+            <span class="lang-en">Title of Work *</span>
+            <span class="lang-ta">கட்டுரையின் தலைப்பு *</span>
+          </label>
+          <input type="text" id="title" name="title" required placeholder="Full title of your submission">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group">
+            <label for="author_name">
+              <span class="lang-en">Author Name *</span>
+              <span class="lang-ta">ஆசிரியர் பெயர் *</span>
+            </label>
+            <input type="text" id="author_name" name="author_name" required placeholder="Dr. / Prof. Name">
+          </div>
+          <div class="form-group">
+            <label for="email">
+              <span class="lang-en">Email Address *</span>
+              <span class="lang-ta">மின்னஞ்சல் முகவரி *</span>
+            </label>
+            <input type="email" id="email" name="email" required placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="abstract">
+            <span class="lang-en">Abstract *</span>
+            <span class="lang-ta">கட்டுரைச் சுருக்கம் *</span>
+          </label>
+          <textarea id="abstract" name="abstract" rows="5" placeholder="Provide abstract of your work..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="pdf_file">
+            <span class="lang-en">Upload PDF *</span>
+            <span class="lang-ta">PDF கோப்பை பதிவேற்றுக *</span>
+          </label>
+          <input type="file" id="pdf_file" name="pdf_file" accept="application/pdf" required style="padding:0.5rem">
+          <small style="color:var(--ink-muted);font-size:0.8rem">
+            <span class="lang-en">PDF format only, max 50MB</span>
+            <span class="lang-ta">PDF வடிவம் மட்டும், அதிகபட்சம் 50MB</span>
+          </small>
+        </div>
+        <button type="submit" class="btn btn-red" style="width:100%;padding:1rem;font-size:1rem;font-weight:600">
+          <span class="lang-en">Submit Work →</span>
+          <span class="lang-ta">கட்டுரை சமர்ப்பிக்கவும் →</span>
+        </button>
+      </form>
+    </div>
+
+    <p style="text-align:center;color:var(--ink-muted);font-size:0.95rem;margin-top:2.5rem;border-top:1px solid var(--border-light);padding-top:1.5rem">
+      <span class="lang-en">Questions or Inquiries? Contact us at</span>
+      <span class="lang-ta">கேள்விகள் அல்லது விசாரணைகளுக்கு எங்களைத் தொடர்பு கொள்ளவும்:</span>
+      <br>
+      <a href="mailto:tamilarivujournal@gmail.com" style="color:var(--kolam-red);font-weight:bold;text-decoration:none;font-size:1.05rem">tamilarivujournal@gmail.com</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabLinks = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Hide all tab contents
+        tabContents.forEach(content => {
+          content.style.display = 'none';
+        });
+
+        // Reset all tab link styles
+        tabLinks.forEach(item => {
+          item.classList.remove('active');
+          item.style.color = 'var(--ink-muted)';
+          item.style.borderBottom = 'none';
+        });
+
+        // Show selected tab content
+        const tabId = link.getAttribute('data-tab');
+        const targetContent = document.getElementById(tabId);
+        if (targetContent) {
+          targetContent.style.display = 'block';
+        }
+
+        // Activate current tab link
+        link.classList.add('active');
+        link.style.color = 'var(--kolam-red)';
+        link.style.borderBottom = '3px solid var(--kolam-red)';
+      });
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>

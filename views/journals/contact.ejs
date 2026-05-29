@@ -1,0 +1,120 @@
+<%- include('partials-header') %>
+
+<div class="page-header">
+  <div class="container">
+    <h1>
+      <span class="lang-en">Contact Us</span>
+      <span class="lang-ta">தொடர்பு கொள்க</span>
+    </h1>
+    <p class="lang-en">Reach out to the TamilArivu editorial office and publisher.</p>
+    <p class="lang-ta">தமிழறிவு இதழின் ஆசிரியர் குழு மற்றும் பதிப்பகத்தைத் தொடர்பு கொள்ளவும்.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-grid" style="display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:start">
+      
+      <!-- Contact Info Cards -->
+      <div>
+        <h3 style="margin-bottom:1.5rem;color:var(--kolam-red)">
+          <span class="lang-en">Journal Headquarters</span>
+          <span class="lang-ta">ஆய்விதழ் தலைமையகம்</span>
+        </h3>
+        
+        <div class="card animate" style="margin-bottom:1.5rem;padding:1.5rem;">
+          <div class="contact-info-item" style="display:flex;gap:1rem;margin-bottom:1rem">
+            <div class="contact-icon" style="font-size:1.5rem">🏢</div>
+            <div>
+              <strong class="lang-en" style="font-size:1.05rem;color:var(--ink)">Managing Director & Publisher</strong>
+              <strong class="lang-ta" style="font-size:1.05rem;color:var(--ink)">நிர்வாக இயக்குனர் & பதிப்பாளர்</strong>
+              <p style="margin-top:0.4rem;color:var(--ink-muted);line-height:1.6">
+                <strong>Mrs. N. Ramya</strong><br>
+                Nevin Scientific Research Services,<br>
+                45/1, Sivagami Nagar, Musiri Post and Taluk,<br>
+                Trichy District, Tamil Nadu, India.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card animate" style="margin-bottom:1.5rem;padding:1.5rem;">
+          <div class="contact-info-item" style="display:flex;gap:1rem;margin-bottom:1rem">
+            <div class="contact-icon" style="font-size:1.5rem">📧</div>
+            <div>
+              <strong class="lang-en">Email Submissions & Inquiries</strong>
+              <strong class="lang-ta">மின்னஞ்சல் சமர்ப்பிப்புகள் & விசாரணைகள்</strong>
+              <p style="margin-top:0.4rem;">
+                <a href="mailto:tamilarivujournal@gmail.com" style="color:var(--kolam-red);font-weight:bold;text-decoration:none;font-size:1.1rem">tamilarivujournal@gmail.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card animate" style="padding:1.5rem;">
+          <div class="contact-info-item" style="display:flex;gap:1rem">
+            <div class="contact-icon" style="font-size:1.5rem">🕐</div>
+            <div>
+              <strong class="lang-en">Response & Review Timeline</strong>
+              <strong class="lang-ta">பதில் & மதிப்பாய்வு கால அளவு</strong>
+              <p style="margin-top:0.4rem;color:var(--ink-muted);line-height:1.6;font-size:0.9rem">
+                <span class="lang-en">We respond to email inquiries within 2-3 business days. The double-blind peer review process typically takes 8-12 weeks from submission.</span>
+                <span class="lang-ta">மின்னஞ்சல் விசாரணைகளுக்கு 2-3 வேலை நாட்களுக்குள் பதிலளிக்கிறோம். சமர்ப்பிக்கப்பட்ட நாளிலிருந்து இரட்டை மறைப்பு சக மதிப்பாய்வு முறை பொதுவாக 8-12 வாரங்கள் ஆகும்.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Message Form -->
+      <div class="form-box">
+        <h3 style="margin-bottom:1.5rem;font-family:var(--font-display)">
+          <span class="lang-en">Send a Direct Message</span>
+          <span class="lang-ta">நேரடி செய்தி அனுப்பவும்</span>
+        </h3>
+        <form action="mailto:tamilarivujournal@gmail.com" method="get" enctype="text/plain">
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Your Full Name *</span>
+              <span class="lang-ta">உங்கள் முழு பெயர் *</span>
+            </label>
+            <input type="text" name="name" required placeholder="Name / பெயர்">
+          </div>
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Your Email Address *</span>
+              <span class="lang-ta">உங்கள் மின்னஞ்சல் முகவரி *</span>
+            </label>
+            <input type="email" name="email" required placeholder="example@email.com">
+          </div>
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Inquiry Subject *</span>
+              <span class="lang-ta">விசாரணை பொருள் *</span>
+            </label>
+            <select name="subject" style="font-family:var(--font-body)">
+              <option value="General Inquiry">General Inquiry / பொதுவான விசாரணை</option>
+              <option value="Submission Query">Submission Query / கட்டுரை சமர்ப்பிப்பு கேள்வி</option>
+              <option value="Review Process">Review Process / மதிப்பாய்வு முறை</option>
+              <option value="Copyright/Permissions">Copyright & Permissions / பதிப்புரிமை & அனுமதிகள்</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Message Body *</span>
+              <span class="lang-ta">செய்தி விவரம் *</span>
+            </label>
+            <textarea name="body" rows="5" required placeholder="Write details here... / இங்கு எழுதவும்..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-red" style="width:100%;font-weight:600">
+            <span class="lang-en">Send Message</span>
+            <span class="lang-ta">செய்தி அனுப்புக</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%- include('partials-footer') %>

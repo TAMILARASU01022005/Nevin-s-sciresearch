@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div class="container">
+    <h1>News & Announcements</h1>
+    <p>Stay updated with the latest events, calls for papers, and literary happenings.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <% if (news && news.length > 0) { %>
+    <div style="display:grid;gap:1.5rem">
+      <% news.forEach((item, idx) => { %>
+      <article class="news-card animate" style="display:grid;grid-template-columns:auto 1fr;gap:1.5rem;padding:1.5rem 2rem;align-items:start">
+        <div style="text-align:center;min-width:80px;padding-top:0.2rem">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--kolam-red);line-height:1"><%= new Date(item.created_at).getDate() %></div>
+          <div style="font-size:0.75rem;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.1em"><%= new Date(item.created_at).toLocaleString('en-IN',{month:'short'}) %> '<%= new Date(item.created_at).getFullYear().toString().slice(2) %></div>
+        </div>
+        <div>
+          <span class="news-badge"><%= item.category %></span>
+          <h3 style="margin:0.3rem 0"><a href="/news/<%= item.id %>" style="color:var(--ink)"><%= item.title %></a></h3>
+          <p style="color:var(--ink-muted);font-size:0.9rem;margin:0.3rem 0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical"><%= item.body %></p>
+          <div style="display:flex;align-items:center;gap:1.5rem;margin-top:0.6rem;flex-wrap:wrap">
+            <a href="/news/<%= item.id %>" style="color:var(--gold);font-size:0.85rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.2rem">
+              <span class="lang-en">Read more <i data-lucide="arrow-right" class="icon-inline" style="margin-left:0.25rem;margin-right:0;width:12px;height:12px;"></i></span>
+              <span class="lang-ta">மேலும் படிக்க <i data-lucide="arrow-right" class="icon-inline" style="margin-left:0.25rem;margin-right:0;width:12px;height:12px;"></i></span>
+            </a>
+            <% if (item.link) { %>
+              <a href="<%= item.link %>" target="_blank" class="news-card-link-btn" style="font-size:0.85rem;color:var(--kolam-red);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.3rem;transition:var(--transition);border-bottom:1px dashed transparent">
+                <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+                <span class="lang-en">Visit Link</span>
+                <span class="lang-ta">இணைப்புக்குச் செல்லவும்</span>
+              </a>
+            <% } %>
+          </div>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p style="text-align:center;color:var(--ink-muted);font-style:italic;padding:3rem">No announcements yet.</p>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

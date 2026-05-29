@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin — Nevin Scientific Research</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="/js/lucide.min.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR BACKDROP OVERLAY FOR MOBILE -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close Sidebar">
+      <i data-lucide="x"></i>
+    </button>
+    <div class="sidebar-brand">
+      <span class="emblem" style="display:inline-block;width:50px;height:50px;border-radius:50%;overflow:hidden;margin-bottom:0.5rem;"><img src="/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></span>
+      <h2>Nevin Scientific Research</h2>
+      <p>Journal & Study Portal</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Overview</div>
+      <a href="/tamil-literature/admin" class="<%= title === 'Admin Dashboard' ? 'active' : '' %>">
+        <i data-lucide="bar-chart-3"></i> Dashboard
+      </a>
+      <div class="nav-section">Content</div>
+      <a href="/tamil-literature/admin/news" class="<%= title.includes('News') ? 'active' : '' %>">
+        <i data-lucide="newspaper"></i> News & Announcements
+      </a>
+      <a href="/tamil-literature/admin/books" class="<%= title.includes('Books') ? 'active' : '' %>">
+        <i data-lucide="book-open"></i> Books & Conferences
+      </a>
+      <a href="/tamil-literature/admin/journals" class="<%= title.includes('Journal') ? 'active' : '' %>">
+        <i data-lucide="scroll"></i> Journals
+      </a>
+      <a href="/tamil-literature/admin/editorial" class="<%= title.includes('Editorial') ? 'active' : '' %>">
+        <i data-lucide="users"></i> Editorial Team
+      </a>
+      <a href="/tamil-literature/admin/submissions" class="<%= title.includes('Submission') ? 'active' : '' %>">
+        <i data-lucide="inbox"></i> Submissions
+      </a>
+      <div class="nav-section">Portal</div>
+      <a href="/" target="_blank"><i data-lucide="globe"></i> View Public Site</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/tamil-literature/admin/logout"><i data-lucide="log-out"></i> Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <button class="admin-hamburger" id="admin-hamburger" aria-label="Toggle Sidebar">
+        <i data-lucide="menu"></i>
+      </button>
+      <h1><%= title %></h1>
+      <div class="topbar-right">
+        <span class="user-badge" style="display:inline-flex;align-items:center;gap:0.35rem;"><i data-lucide="user" style="width:14px;height:14px;"></i> Admin</span>
+      </div>
+    </div>
+    <div class="admin-content">
+
+      <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+      <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>

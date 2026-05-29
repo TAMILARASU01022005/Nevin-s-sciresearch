@@ -1,0 +1,41 @@
+<%- include('partials-header') %>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Editorial Team</h1>
+    <p>Our distinguished editorial board comprises leading scholars in Tamil literature and linguistics from institutions worldwide.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <% if (team && team.length > 0) { %>
+    <div class="grid-4">
+      <% team.forEach((member, i) => { %>
+      <div class="team-card animate" style="animation-delay:<%= i * 0.1 %>s">
+        <% if (member.profile_image) { %>
+          <img src="<%= member.profile_image.startsWith('http') ? member.profile_image : '/uploads/editorial/' + member.profile_image %>" alt="<%= member.name %>" class="team-avatar">
+        <% } else { %>
+          <div class="team-avatar-placeholder">👤</div>
+        <% } %>
+        <h3 class="team-name"><%= member.name %></h3>
+        <div class="team-role"><%= member.role %></div>
+        <% if (member.bio) { %>
+          <p style="color:var(--ink-muted);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem"><%= member.bio.substring(0, 120) %><%= member.bio.length > 120 ? '…' : '' %></p>
+        <% } %>
+        <% if (member.popular_work) { %>
+          <div class="team-work">Notable: <em><%= member.popular_work %></em></div>
+        <% } %>
+        <% if (member.works_link && member.works_link !== '#') { %>
+          <a href="<%= member.works_link %>" class="btn btn-outline btn-sm" style="color:var(--kolam-red);border-color:var(--border);margin-top:0.5rem" target="_blank" rel="noopener">View All Works →</a>
+        <% } %>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p style="text-align:center;color:var(--ink-muted);font-style:italic;padding:3rem">Editorial team information coming soon.</p>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials-footer') %>

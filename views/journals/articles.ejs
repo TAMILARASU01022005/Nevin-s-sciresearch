@@ -1,0 +1,177 @@
+<%- include('partials-header') %>
+
+<div class="page-header">
+  <div class="container">
+    <h1>
+      <span class="lang-en">Archives</span>
+      <span class="lang-ta">ஆவணக்காப்பகம்</span>
+    </h1>
+    <p class="lang-en">You can browse the current and past issues/volumes of the TamilArivu journal in this section. Every research paper is freely downloadable in PDF format and open-access for citation.</p>
+    <p class="lang-ta">இந்தப் பிரிவில் தமிழறிவு இதழின் முந்தைய இதழ்கள் மற்றும் வெளியீடுகளைப் பார்க்கலாம். ஒவ்வொரு கட்டுரையும் PDF வடிவில் இலவசமாகப் பதிவிறக்கம் செய்யலாம் மற்றும் மேற்கோளுக்கு பயன்படுத்தலாம்.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Search -->
+    <form method="GET" action="/journals/articles" style="margin-bottom:2.5rem;display:flex;gap:1rem;max-width:500px">
+      <input type="text" name="q" value="<%= q %>" placeholder="Search articles, authors…" style="flex:1;padding:0.8rem 1rem;border:1.5px solid var(--border-light);border-radius:4px;font-family:var(--font-body);font-size:1rem;outline:none">
+      <button type="submit" class="btn btn-red">
+        <span class="lang-en">Search</span>
+        <span class="lang-ta">தேடல்</span>
+      </button>
+      <% if (q) { %>
+        <a href="/journals/articles" class="btn" style="background:var(--parchment);border-color:var(--border);color:var(--ink-muted);text-decoration:none;display:inline-flex;align-items:center;justify-content:center">
+          <span class="lang-en">Clear</span>
+          <span class="lang-ta">அழி</span>
+        </a>
+      <% } %>
+    </form>
+
+    <!-- Type Filters to Separate Journal and Article -->
+    <div class="type-filters" style="display:flex;gap:0.8rem;align-items:center;margin-bottom:2.5rem;flex-wrap:wrap">
+      <span style="font-weight:600;font-size:0.9rem;color:var(--ink-muted)">
+        <span class="lang-en">Filter Type:</span>
+        <span class="lang-ta">வகை:</span>
+      </span>
+      <button id="filter-all" class="btn btn-sm btn-red" style="font-weight:600;padding:0.4rem 1rem">
+        <span class="lang-en">Show All</span>
+        <span class="lang-ta">அனைத்தும்</span>
+      </button>
+      <button id="filter-journals" class="btn btn-sm" style="background:transparent;border:1.5px solid var(--border);color:var(--ink);font-weight:600;padding:0.4rem 1rem">
+        <span class="lang-en">Journals (ZIP Group)</span>
+        <span class="lang-ta">இதழ்கள் (ZIP தொகுப்பு)</span>
+      </button>
+      <button id="filter-articles" class="btn btn-sm" style="background:transparent;border:1.5px solid var(--border);color:var(--ink);font-weight:600;padding:0.4rem 1rem">
+        <span class="lang-en">Articles (PDF/DOCX)</span>
+        <span class="lang-ta">கட்டுரைகள் (PDF/DOCX)</span>
+      </button>
+    </div>
+
+    <!-- Articles Section -->
+    <div id="articles-section">
+      <% if (journals && journals.length > 0) { %>
+        <div class="empty-filter-state" style="display:none;text-align:center;padding:4rem 2rem">
+          <div style="margin-bottom:1rem;color:var(--border);"><i data-lucide="inbox" style="width:48px;height:48px;stroke-width:1.5;"></i></div>
+          <p style="color:var(--ink-muted);font-style:italic">
+            <span class="lang-en">No publications match this filter.</span>
+            <span class="lang-ta">இந்த வகைக்குப் பொருத்தமான வெளியீடுகள் எதுவும் இல்லை.</span>
+          </p>
+        </div>
+
+        <div class="articles-container" style="display:grid;gap:1.5rem">
+          <% journals.forEach((j, i) => { %>
+          <% 
+            const ext = j.pdf_file ? j.pdf_file.substring(j.pdf_file.lastIndexOf('.')).toLowerCase() : '';
+          %>
+          <article class="card animate" data-type="<%= j.type || 'article' %>" style="animation-delay:<%= i * 0.05 %>s">
+            <div class="card-body article-card-body">
+              <div>
+                <div class="card-meta">
+                  <% if (j.type === 'journal') { %>
+                    <span class="tag" style="background:#b7950b;color:white;font-weight:600">Journal (ZIP)</span>
+                  <% } else { %>
+                    <span class="tag" style="background:var(--kolam-red);color:white;font-weight:600">Article</span>
+                  <% } %>
+                  <% if (j.volume) { %> &nbsp;Vol. <%= j.volume %><% } %>
+                  <% if (j.issue) { %> • Issue <%= j.issue %><% } %>
+                  <% if (j.year) { %> • <%= j.year %><% } %>
+                  <% if (j.category) { %> &nbsp;<span class="tag"><%= j.category %></span><% } %>
+                </div>
+                <h3 class="card-title" style="font-size:1.25rem">
+                  <%= j.title %>
+                </h3>
+                <% if (j.author) { %><div class="card-author">by <%= j.author %></div><% } %>
+                <% if (j.abstract) { %>
+                <p class="card-desc"><%= j.abstract.substring(0, 200) %><%= j.abstract.length > 200 ? '…' : '' %></p>
+                <% } %>
+              </div>
+              <div class="article-card-actions">
+                <a href="/download/journal/<%= j.id %>" class="btn <%= j.type === 'journal' ? 'btn-red' : 'btn-primary' %>" style="<%= j.type === 'journal' ? 'background:#b7950b;border-color:#b7950b;color:white' : '' %>">
+                  <span class="lang-en">
+                    <% if (j.type === 'journal') { %><i data-lucide="download" class="icon-inline"></i> Download ZIP<% } else if (ext === '.docx' || ext === '.doc') { %><i data-lucide="file-text" class="icon-inline"></i> Word Document<% } else { %><i data-lucide="file-down" class="icon-inline"></i> PDF Article<% } %>
+                  </span>
+                  <span class="lang-ta">
+                    <% if (j.type === 'journal') { %><i data-lucide="download" class="icon-inline"></i> ZIP இதழ்<% } else if (ext === '.docx' || ext === '.doc') { %><i data-lucide="file-text" class="icon-inline"></i> Word கட்டுரை<% } else { %><i data-lucide="file-down" class="icon-inline"></i> PDF கட்டுரை<% } %>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </article>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div style="text-align:center;padding:4rem 2rem">
+          <div style="margin-bottom:1rem;color:var(--border);"><i data-lucide="inbox" style="width:48px;height:48px;stroke-width:1.5;"></i></div>
+          <p style="color:var(--ink-muted);font-style:italic">
+            <span class="lang-en">No publications found.</span>
+            <span class="lang-ta">வெளியீடுகள் எதுவும் இன்னும் இல்லை.</span>
+          </p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<script>
+  let activeTypeFilter = 'all';
+
+  function applyTypeFilter(type) {
+    activeTypeFilter = type;
+    
+    // Update button styles
+    const filters = ['all', 'journals', 'articles'];
+    filters.forEach(f => {
+      const btn = document.getElementById(`filter-${f}`);
+      if (!btn) return;
+      if ((f === 'all' && type === 'all') || (f === 'journals' && type === 'journal') || (f === 'articles' && type === 'article')) {
+        btn.classList.add('btn-red');
+        btn.style.background = '';
+        btn.style.border = '';
+        btn.style.color = '';
+      } else {
+        btn.classList.remove('btn-red');
+        btn.style.background = 'transparent';
+        btn.style.border = '1.5px solid var(--border)';
+        btn.style.color = 'var(--ink)';
+      }
+    });
+
+    const section = document.getElementById('articles-section');
+    if (!section) return;
+
+    const cards = section.querySelectorAll('article.card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const cardType = card.getAttribute('data-type');
+      if (type === 'all' || cardType === type) {
+        card.style.display = ''; // Restore default display
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Show/hide empty filter state message
+    const emptyState = section.querySelector('.empty-filter-state');
+    const articlesContainer = section.querySelector('.articles-container');
+
+    if (cards.length > 0) {
+      if (visibleCount === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        if (articlesContainer) articlesContainer.style.display = 'none';
+      } else {
+        if (emptyState) emptyState.style.display = 'none';
+        if (articlesContainer) articlesContainer.style.display = 'grid';
+      }
+    }
+  }
+
+  document.getElementById('filter-all').addEventListener('click', () => applyTypeFilter('all'));
+  document.getElementById('filter-journals').addEventListener('click', () => applyTypeFilter('journal'));
+  document.getElementById('filter-articles').addEventListener('click', () => applyTypeFilter('article'));
+</script>
+
+<%- include('partials-footer') %>

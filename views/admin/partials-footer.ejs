@@ -1,0 +1,62 @@
+    </div><!-- /.admin-content -->
+  </div><!-- /.admin-main -->
+</div><!-- /.admin-layout -->
+<script>
+const sidebar = document.getElementById('sidebar');
+const hamburger = document.getElementById('admin-hamburger');
+const overlay = document.getElementById('sidebar-overlay');
+const closeBtn = document.getElementById('sidebar-close');
+
+function toggleSidebar() {
+  if (sidebar) sidebar.classList.toggle('open');
+  if (overlay) overlay.classList.toggle('active');
+}
+
+function closeSidebar() {
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('active');
+}
+
+if (hamburger) {
+  hamburger.addEventListener('click', (e) => {
+    toggleSidebar();
+    e.stopPropagation();
+  });
+}
+
+if (closeBtn) {
+  closeBtn.addEventListener('click', (e) => {
+    closeSidebar();
+    e.stopPropagation();
+  });
+}
+
+if (overlay) {
+  overlay.addEventListener('click', () => {
+    closeSidebar();
+  });
+}
+
+document.addEventListener('click', (e) => {
+  if (sidebar && !sidebar.contains(e.target) && hamburger && !hamburger.contains(e.target)) {
+    closeSidebar();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSidebar();
+  }
+});
+document.querySelectorAll('[data-confirm]').forEach(el => {
+  el.addEventListener('click', e => { if (!confirm(el.dataset.confirm || 'Are you sure?')) e.preventDefault(); });
+});
+document.querySelectorAll('.flash').forEach(el => {
+  setTimeout(() => { el.style.transition = 'opacity 0.5s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 500); }, 5000);
+});
+if (typeof lucide !== 'undefined') {
+  lucide.createIcons();
+}
+</script>
+</body>
+</html>

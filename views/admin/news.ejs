@@ -1,0 +1,72 @@
+<%- include('partials-header') %>
+
+<!-- Add Form -->
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>Post New Announcement</h3></div>
+  <div class="admin-panel-body">
+    <form action="/tamil-literature/admin/news/add" method="POST">
+      <div class="form-group">
+        <label>Title *</label>
+        <input type="text" name="title" required placeholder="Announcement title">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select name="category">
+          <option value="General">General</option>
+          <option value="Events">Events</option>
+          <option value="Call for Papers">Call for Papers</option>
+          <option value="Awards">Awards</option>
+          <option value="Publications">Publications</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Link / URL (Optional)</label>
+        <input type="url" name="link" placeholder="e.g., https://example.com/details">
+      </div>
+      <div class="form-group">
+        <label>Content *</label>
+        <textarea name="body" rows="6" required placeholder="Write the full announcement here…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Post Announcement</button>
+    </form>
+  </div>
+</div>
+
+<!-- News List -->
+<div class="admin-panel">
+  <div class="admin-panel-header"><h3>All News Posts (<%= news.length %>)</h3></div>
+  <div class="admin-panel-body" style="padding:0">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (news.length > 0) { %>
+          <% news.forEach(n => { %>
+          <tr>
+            <td>
+              <strong><%= n.title %></strong>
+              <% if (n.link) { %>
+                <div style="font-size:0.75rem;margin-top:0.25rem">
+                  <a href="<%= n.link %>" target="_blank" style="color:var(--admin-primary);text-decoration:none;font-weight:600">🔗 Link</a>
+                </div>
+              <% } %>
+            </td>
+            <td><span class="status status-approved"><%= n.category %></span></td>
+            <td style="white-space:nowrap"><%= new Date(n.created_at).toLocaleDateString('en-IN') %></td>
+            <td>
+              <form action="/tamil-literature/admin/news/delete/<%= n.id %>" method="POST" style="display:inline">
+                <button type="submit" class="btn btn-danger btn-sm" data-confirm="Delete this news post?">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+          <% } else { %>
+          <tr><td colspan="4" style="text-align:center;color:var(--admin-muted);font-style:italic;padding:2rem">No posts yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('partials-footer') %>

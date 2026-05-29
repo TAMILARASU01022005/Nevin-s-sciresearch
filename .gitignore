@@ -1,0 +1,13 @@
+node_modules/
+.env
+db/*.db*
+public/uploads/books/*
+public/uploads/journals/*
+public/uploads/editorial/*
+public/uploads/submissions/*
+!public/uploads/books/.gitkeep
+!public/uploads/journals/.gitkeep
+!public/uploads/editorial/.gitkeep
+!public/uploads/submissions/.gitkeep
+*.log
+.DS_Store

@@ -1,0 +1,191 @@
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <div class="container">
+    <h1>
+      <span class="lang-en">Books & Conferences</span>
+      <span class="lang-ta">புத்தகங்கள் & மாநாடுகள்</span>
+    </h1>
+    <p class="lang-en">Curated scholarly publications and conference proceedings on Tamil literature, science, and cultural heritage.</p>
+    <p class="lang-ta">தமிழ் இலக்கியம், அறிவியல் மற்றும் கலாச்சார பாரம்பரியம் குறித்த தேர்ந்தெடுக்கப்பட்ட கல்விசார் வெளியீடுகள் மற்றும் மாநாட்டு தொகுப்புகள்.</p>
+  </div>
+</div>
+
+<div class="container" style="margin-top: 3rem; margin-bottom: 1rem;">
+  <div class="type-filters" style="display:flex;gap:0.8rem;align-items:center;justify-content:center;flex-wrap:wrap">
+    <span style="font-weight:600;font-size:0.9rem;color:var(--ink-muted)">
+      <span class="lang-en">Filter Type:</span>
+      <span class="lang-ta">வகை:</span>
+    </span>
+    <button id="filter-all" class="btn btn-sm btn-red" style="font-weight:600;padding:0.4rem 1rem">
+      <span class="lang-en">Show All</span>
+      <span class="lang-ta">அனைத்தும்</span>
+    </button>
+    <button id="filter-books" class="btn btn-sm" style="background:transparent;border:1.5px solid var(--border);color:var(--ink);font-weight:600;padding:0.4rem 1rem">
+      <span class="lang-en">Books</span>
+      <span class="lang-ta">புத்தகங்கள்</span>
+    </button>
+    <button id="filter-confs" class="btn btn-sm" style="background:transparent;border:1.5px solid var(--border);color:var(--ink);font-weight:600;padding:0.4rem 1rem">
+      <span class="lang-en">Conferences</span>
+      <span class="lang-ta">மாநாடுகள்</span>
+    </button>
+  </div>
+</div>
+
+<div id="books-section">
+<!-- BOOKS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">
+        <span class="lang-en">Publications</span>
+        <span class="lang-ta">வெளியீடுகள்</span>
+      </span>
+      <h2>
+        <span class="lang-en">Books</span>
+        <span class="lang-ta">புத்தகங்கள்</span>
+      </h2>
+      <div class="section-divider"><span><i data-lucide="book-open" style="width:20px;height:20px;stroke-width:1.5;"></i></span></div>
+    </div>
+
+    <% if (books && books.length > 0) { %>
+    <div class="grid-3">
+      <% books.forEach((book, i) => { %>
+      <article class="card animate">
+        <% if (book.cover_image) { %>
+          <img src="<%= book.cover_image.startsWith('http') ? book.cover_image : '/uploads/books/' + book.cover_image %>" alt="<%= book.title %>" class="card-img">
+        <% } else { %>
+          <div class="card-img-placeholder"><i data-lucide="book-open" style="width:48px;height:48px;stroke-width:1.5;color:var(--border);"></i></div>
+        <% } %>
+        <div class="card-body">
+          <% if (book.year) { %><div class="card-meta"><%= book.year %></div><% } %>
+          <h3 class="card-title"><%= book.title %></h3>
+          <div class="card-author">
+            <span class="lang-en">by </span>
+            <span class="lang-ta">எழுதியவர்: </span>
+            <%= book.author %>
+          </div>
+          <% if (book.description) { %>
+          <p class="card-desc"><%= book.description.substring(0, 130) %><%= book.description.length > 130 ? '…' : '' %></p>
+          <% } %>
+          <a href="/download/book/<%= book.id %>" class="btn btn-primary btn-sm">
+            <span class="lang-en"><i data-lucide="download" class="icon-inline"></i> Download PDF</span>
+            <span class="lang-ta"><i data-lucide="download" class="icon-inline"></i> PDF பதிவிறக்கம்</span>
+          </a>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p style="text-align:center;color:var(--ink-muted);font-style:italic;padding:2rem">
+      <span class="lang-en">No books published yet.</span>
+      <span class="lang-ta">புத்தகங்கள் எதுவும் இன்னும் வெளியிடப்படவில்லை.</span>
+    </p>
+    <% } %>
+  </div>
+</section>
+</div>
+
+<!-- CONFERENCE PROCEEDINGS -->
+<% if (conferences && conferences.length > 0) { %>
+<div id="conferences-section">
+<section class="section bg-parchment">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">
+        <span class="lang-en">Academic Events</span>
+        <span class="lang-ta">கல்விசார் நிகழ்வுகள்</span>
+      </span>
+      <h2>
+        <span class="lang-en">Conference Proceedings</span>
+        <span class="lang-ta">மாநாட்டு தொகுப்புகள்</span>
+      </h2>
+      <div class="section-divider"><span><i data-lucide="graduation-cap" style="width:20px;height:20px;stroke-width:1.5;"></i></span></div>
+    </div>
+
+    <div class="grid-3">
+      <% conferences.forEach((conf, i) => { %>
+      <article class="card animate">
+        <% if (conf.cover_image) { %>
+          <img src="<%= conf.cover_image.startsWith('http') ? conf.cover_image : '/uploads/books/' + conf.cover_image %>" alt="<%= conf.title %>" class="card-img">
+        <% } else { %>
+          <div class="card-img-placeholder"><i data-lucide="graduation-cap" style="width:48px;height:48px;stroke-width:1.5;color:var(--border);"></i></div>
+        <% } %>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="lang-en">Conference Proceedings</span>
+            <span class="lang-ta">மாநாட்டு வெளியீடு</span>
+            <% if (conf.year) { %> &nbsp;•&nbsp; <%= conf.year %><% } %>
+          </div>
+          <h3 class="card-title"><%= conf.title %></h3>
+          <% if (conf.conference_name) { %>
+          <div class="card-author" style="color:var(--kolam-red)"><%= conf.conference_name %></div>
+          <% } %>
+          <div class="card-author">
+            <span class="lang-en">by </span>
+            <span class="lang-ta">எழுதியவர்: </span>
+            <%= conf.author %>
+          </div>
+          <% if (conf.description) { %>
+          <p class="card-desc"><%= conf.description.substring(0, 130) %><%= conf.description.length > 130 ? '…' : '' %></p>
+          <% } %>
+          <a href="/download/book/<%= conf.id %>" class="btn btn-primary btn-sm">
+            <span class="lang-en"><i data-lucide="download" class="icon-inline"></i> Download PDF</span>
+            <span class="lang-ta"><i data-lucide="download" class="icon-inline"></i> PDF பதிவிறக்கம்</span>
+          </a>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+</div>
+<% } %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnAll = document.getElementById('filter-all');
+    const btnBooks = document.getElementById('filter-books');
+    const btnConfs = document.getElementById('filter-confs');
+    
+    const sectionBooks = document.getElementById('books-section');
+    const sectionConfs = document.getElementById('conferences-section');
+    
+    function applyFilter(type) {
+      // Toggle button styles
+      [btnAll, btnBooks, btnConfs].forEach(btn => {
+        if (!btn) return;
+        btn.classList.remove('btn-red');
+        btn.style.background = 'transparent';
+        btn.style.border = '1.5px solid var(--border)';
+        btn.style.color = 'var(--ink)';
+      });
+      
+      const activeBtn = type === 'all' ? btnAll : (type === 'books' ? btnBooks : btnConfs);
+      if (activeBtn) {
+        activeBtn.classList.add('btn-red');
+        activeBtn.style.background = '';
+        activeBtn.style.border = '';
+        activeBtn.style.color = '';
+      }
+      
+      // Toggle sections visibility
+      if (type === 'all') {
+        if (sectionBooks) sectionBooks.style.display = '';
+        if (sectionConfs) sectionConfs.style.display = '';
+      } else if (type === 'books') {
+        if (sectionBooks) sectionBooks.style.display = '';
+        if (sectionConfs) sectionConfs.style.display = 'none';
+      } else if (type === 'confs') {
+        if (sectionBooks) sectionBooks.style.display = 'none';
+        if (sectionConfs) sectionConfs.style.display = '';
+      }
+    }
+    
+    if (btnAll) btnAll.addEventListener('click', () => applyFilter('all'));
+    if (btnBooks) btnBooks.addEventListener('click', () => applyFilter('books'));
+    if (btnConfs) btnConfs.addEventListener('click', () => applyFilter('confs'));
+  });
+</script>
+
+<%- include('partials/footer') %>
