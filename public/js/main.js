@@ -1,4 +1,4 @@
-// public/js/main.js — TamilArivu – International Journal of Tamil and Scientific Studies
+// public/js/main.js — Arivan – International Journal of Tamil and Scientific Studies
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const applyLanguage = (lang) => {
     document.body.classList.remove('lang-preference-en', 'lang-preference-ta');
     document.body.classList.add(`lang-preference-${lang}`);
-    localStorage.setItem('tamilarivu_lang', lang);
+    localStorage.setItem('arivan_lang', lang);
     
     // Update label on all switcher buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -96,13 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const storedLang = localStorage.getItem('tamilarivu_lang') || 'en';
+  const storedLang = localStorage.getItem('arivan_lang') || 'en';
   applyLanguage(storedLang);
 
   document.body.addEventListener('click', (e) => {
     const langBtn = e.target.closest('.lang-btn');
     if (langBtn) {
-      const currentLang = localStorage.getItem('tamilarivu_lang') || 'en';
+      const currentLang = localStorage.getItem('arivan_lang') || 'en';
       const nextLang = currentLang === 'ta' ? 'en' : 'ta';
       applyLanguage(nextLang);
       e.preventDefault();

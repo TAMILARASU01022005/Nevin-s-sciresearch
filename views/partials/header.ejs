@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Nevin Scientific Research — International Journal of Tamil and Scientific Studies">
-  <title><%= title %> | Nevin Scientific Research</title>
+  <meta name="description" content="Nevin Scientific Research">
+  <title><%= title === 'NSRS' ? 'NSRS' : (title.includes('Nevin Scientific Research') ? title : title + ' | Nevin Scientific Research') %></title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/logo.png" type="image/png">
 </head>
 <body>
 
 <header class="site-header">
+  <% if (title !== 'NSRS') { %>
   <div class="header-top">
-    <span class="lang-en">Nevin Scientific Research – International Journal of Tamil and Scientific Studies</span>
-    <span class="lang-ta">நெவின் அறிவியல் ஆராய்ச்சி – சர்வதேச தமிழ்–அறிவியல் ஆய்விதழ்</span>
+    <span class="lang-en">Nevin Scientific Research</span>
+    <span class="lang-ta">நெவின் அறிவியல் ஆராய்ச்சி</span>
   </div>
+  <% } %>
   <nav class="navbar">
     <a href="/" class="logo" aria-label="Nevin Scientific Research Home">
       <div class="logo-emblem" style="padding:0;overflow:hidden;">

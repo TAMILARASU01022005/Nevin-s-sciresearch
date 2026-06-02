@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     .select('*')
     .order('created_at', { ascending: false })
     .limit(6);
-  res.render('home', { title: 'TamilArivu – International Journal of Tamil and Scientific Studies', news: news || [] });
+  res.render('home', { title: 'NSRS', news: news || [] });
 });
 
 // NEWS & ANNOUNCEMENTS

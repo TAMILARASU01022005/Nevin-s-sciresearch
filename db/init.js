@@ -98,9 +98,9 @@ if (!adminExists) {
 const newsCount = db.prepare('SELECT COUNT(*) as c FROM news').get().c;
 if (newsCount === 0) {
   const insertNews = db.prepare('INSERT INTO news (title, body, category) VALUES (?, ?, ?)');
-  insertNews.run('Inaugural Launch of TamilArivu Journal', 'We are proud to introduce TamilArivu – International Journal of Tamil and Scientific Studies. TamilArivu is a peer-reviewed, open-access international research journal dedicated to exploring the relationship between Tamil language, literature, heritage, and scientific thought.', 'General');
+  insertNews.run('Inaugural Launch of Arivan Journal', 'We are proud to introduce Arivan – International Journal of Tamil and Scientific Studies. Arivan is a peer-reviewed, open-access international research journal dedicated to exploring the relationship between Tamil language, literature, heritage, and scientific thought.', 'General');
   insertNews.run('Call for Papers — Volume I, Issue 1 (January 2026)', 'The editorial board invites original research articles, review papers, and critical essays for our inaugural issue. Scope includes Linguistics, Science in Classical Tamil, Technology in Literature, History of Science, and Scientific Terminology in Tamil. Submission deadline: December 31, 2025.', 'Call for Papers');
-  insertNews.run('Scope and Focus: Blending Heritage with Science', 'TamilArivu promotes interdisciplinary research linking classical Tamil knowledge with modern science, technology, and innovation. We encourage comparative and interdisciplinary studies globally.', 'General');
+  insertNews.run('Scope and Focus: Blending Heritage with Science', 'Arivan promotes interdisciplinary research linking classical Tamil knowledge with modern science, technology, and innovation. We encourage comparative and interdisciplinary studies globally.', 'General');
 }
 
 const editorialCount = db.prepare('SELECT COUNT(*) as c FROM editorial_team').get().c;
@@ -116,7 +116,7 @@ const booksCount = db.prepare('SELECT COUNT(*) as c FROM books').get().c;
 if (booksCount === 0) {
   const insertBook = db.prepare('INSERT INTO books (title, author, description, pdf_file, is_conference, year) VALUES (?, ?, ?, ?, ?, ?)');
   insertBook.run('Tamil Scientific Heritage: A Review', 'Dr. R. Balakrishnan', 'An in-depth exploration of metal-casting, water harvesting, and architectural marvels of the ancient Tamils.', 'sample.pdf', 0, 2025);
-  insertBook.run('Proceedings: TamilArivu International Scientific Conference', 'Various Authors', 'Collected peer-reviewed papers from the TamilArivu International Conference on Tamil and Scientific Studies.', 'sample.pdf', 1, 2026);
+  insertBook.run('Proceedings: Arivan International Scientific Conference', 'Various Authors', 'Collected peer-reviewed papers from the Arivan International Conference on Tamil and Scientific Studies.', 'sample.pdf', 1, 2026);
 }
 
 const journalsCount = db.prepare('SELECT COUNT(*) as c FROM journals').get().c;

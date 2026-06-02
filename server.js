@@ -1,4 +1,4 @@
-// server.js — TamilArivu – International Journal of Tamil and Scientific Studies
+// server.js — Arivan – International Journal of Tamil and Scientific Studies
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -74,7 +74,7 @@ app.use((err, req, res, next) => {
 
 // ── Start ─────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n🪔 TamilArivu – International Journal of Tamil and Scientific Studies running at http://localhost:${PORT}`);
+  console.log(`\n🪔 Arivan – International Journal of Tamil and Scientific Studies running at http://localhost:${PORT}`);
   console.log(`📚 Admin panel: http://localhost:${PORT}/tamil-literature/admin`);
   console.log(`📖 Journals:    http://localhost:${PORT}/journals\n`);
 });
